@@ -1,0 +1,213 @@
+﻿@model Project_63131631.Areas.Administrator.Models.Product_63131631
+
+@{
+    ViewBag.Title = "Cập nhật sản phẩm";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cập nhật sản phẩm</h2>
+
+<div>
+    <i class="fa fa-undo fa-fw"></i>@Html.ActionLink("Quay lại", "Index", "Product_63131631")
+</div>
+@using (Html.BeginForm("Edit", "Product_63131631", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+<div class="page-content" style=" margin-top: 100px;">
+    @Html.ValidationSummary(true)
+    @if (!string.IsNullOrEmpty(ViewBag.CreatePdcError))
+    {
+        <div class="text-success" style="margin-left: 15px; border: 1px solid black; margin-right: 15px; padding: 20px; background-color: honeydew;">
+            @ViewBag.CreatePdcError
+        </div>
+    }
+
+    @Html.HiddenFor(model => model.proID)
+    
+        <!-- end row -->
+
+    <!--</div>--> <!-- container-fluid -->
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img style="" id="preview-image" src="@Html.DisplayFor(model => model.proPhoto)" />
+                            </div>
+                            <label class="btn btn-outline-primary file-label">
+                                Tải Hình Ảnh Mới
+                                <input type="file" name="file" class="account-settings-fileinput hidden-input" id="file-input" onchange="displayImage()">
+                            </label> &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h6 class="mb-2 text-primary">Chỉnh Sửa Thông Tin</h6>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="manufacturername">Tên Sản Phẩm</label>
+                                @Html.EditorFor(model => model.proName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên sản phẩm..." } })
+                            </div>
+
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="productdesc">Chiết Khấu</label>
+                                @Html.EditorFor(model => model.proDiscount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập chiết khấu (%)..." } })
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="productdesc">Bảo Hành Sản Phẩm</label>
+                                @Html.EditorFor(model => model.proGuarantee, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập Bảo Hành sản phẩm..." } })
+
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="productdesc">Đơn Giá</label>
+                                @Html.EditorFor(model => model.proPrice, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập đơn giá sản phẩm..." } })
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label class="control-label">Loại Sản Phẩm</label>
+                                @Html.DropDownListFor(model => model.typeID, ViewBag.typeListEdit as SelectList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label class="control-label">Hãng Sản Xuất</label>
+                                @Html.DropDownListFor(model => model.pdcID, ViewBag.pdcListEdit as SelectList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="productdesc">Mô Tả Sản Phẩm</label>
+                                @Html.TextAreaFor(model => model.proDescription, new { @class = "form-control", @placeholder = "Nhập mô tả sản phẩm..." })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters">
+                        <div class="" style="margin:0 auto">
+                            <div class="text-right">
+                                <a style="color: white; background-color: black; width: 190px; margin-left: 23px; border-radius: 35px " class="btn btn-info add-new" href="@Url.Action("Index")" role="button"><i class=""></i>Quay Lại</a>
+                                <button style="color: white; background-color: black; width: 168px;border-radius:35px" type="submit" class="btn btn-info add-new">Cập Nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<style>
+
+    .account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.account-settings-fileinput {
+    position: absolute;
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+
+    .account-settings .user-profile .user-avatar img {
+        width: 200px;
+        height: 100%;
+    }
+
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+}
+
+.account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+
+    .account-settings .about h5 {
+        margin: 0 0 15px 0;
+        color: #007ae1;
+    }
+
+    .account-settings .about p {
+        font-size: 0.825rem;
+    }
+
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: .825rem;
+    background: #ffffff;
+    color: #2e323c;
+}
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+    .hidden-input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .file-label {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+</style>
+<script>
+    function displayImage() {
+        var input = document.getElementById('file-input');
+        var img = document.getElementById('preview-image');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

@@ -1,0 +1,159 @@
+﻿@model Project_63131631.Areas.Administrator.Models.Product_63131631
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+
+    Project_63131631.Repository.ProductDAO proDAO = new Project_63131631.Repository.ProductDAO();
+    Project_63131631.Areas.Administrator.Models.AdminContext_63131631 db = new Project_63131631.Areas.Administrator.Models.AdminContext_63131631();
+}
+
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 font-size-18">Product Detail</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                            <li class="breadcrumb-item active">Product Detail</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="product-detai-imgs">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3 col-4">
+                                            <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                <a class="nav-link active" id="product-1-tab" data-toggle="pill" href="#product-1" role="tab" aria-controls="product-1" aria-selected="true">
+                                                    <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block rounded">
+                                                </a>
+                                                <a class="nav-link" id="product-2-tab" data-toggle="pill" href="#product-2" role="tab" aria-controls="product-2" aria-selected="false">
+                                                    <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block rounded">
+                                                </a>
+                                                <a class="nav-link" id="product-3-tab" data-toggle="pill" href="#product-3" role="tab" aria-controls="product-3" aria-selected="false">
+                                                    <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block rounded">
+                                                </a>
+                                                <a class="nav-link" id="product-4-tab" data-toggle="pill" href="#product-4" role="tab" aria-controls="product-4" aria-selected="false">
+                                                    <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block rounded">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 offset-md-1 col-sm-9 col-8">
+                                            <div class="tab-content" id="v-pills-tabContent">
+                                                <div class="tab-pane fade show active" id="product-1" role="tabpanel" aria-labelledby="product-1-tab">
+                                                    <div>
+                                                        <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="product-2" role="tabpanel" aria-labelledby="product-2-tab">
+                                                    <div>
+                                                        <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="product-3" role="tabpanel" aria-labelledby="product-3-tab">
+                                                    <div>
+                                                        <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="product-4" role="tabpanel" aria-labelledby="product-4-tab">
+                                                    <div>
+                                                        <img src="@Html.DisplayFor(model => model.proPhoto)" alt="" class="img-fluid mx-auto d-block">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center" style="display: inline-flex; margin-top: 55px; ">
+                                                <a style="color: white; background-color: black; width: 190px; margin-left: 23px; border-radius: 35px " class="btn btn-info add-new" href="@Url.Action("Index")" role="button"><i class=""></i>Quay Lại</a>
+                                                <a style="color: white; background-color: black; width: 190px; margin-left: 23px; border-radius: 35px " class="btn btn-info add-new" href="@Url.Action("Edit", "Product_63131631", new { id = Model.proID })" role="button"><i class="far fa-edit m-1"></i>Chỉnh Sửa</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <div class="mt-4 mt-xl-3">
+                                    <h4 class="mt-1 mb-3">
+                                        @Html.DisplayFor(model => model.proName)
+                                    </h4>
+                                    <p class="text-muted"><i class="fas fa-shield-alt font-size-16 align-middle text-primary mr-1"></i> Bảo Hành: @Html.DisplayFor(model => model.proGuarantee)</p>
+                                    <p class="text-muted float-left mr-3">
+                                        <span>
+                                            @if (db.Rates.Find(Model.proID) != null)
+                                            {
+                                                for (int i = 0; i < db.Rates.Find(Model.proID).rateStar; i++)
+                                                {
+                                                    <img src="~/Images/star.png" style="background-color:rgb(255, 172, 0);" />
+                                                }
+                                                for (int i = 0; i < 5 - db.Rates.Find(Model.proID).rateStar; i++)
+                                                {
+                                                    <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                for (int i = 0; i < 5; i++)
+                                                {
+                                                    <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                }
+                                            }
+                                        </span>
+                                    </p>
+                                    <p class="text-muted mb-4">( 0 Đánh Giá )</p>
+                                    @{
+                                        int newPrice = Int32.Parse(Model.proPrice) - ((Int32.Parse(Model.proPrice) *    Model.proDiscount.Value) / 100);
+                                    }
+                                    <h6 class="text-success text-uppercase">
+                                        Giảm Giá @Html.DisplayFor(model => model.proDiscount)%
+                                    </h6>
+                                    <h5 class="mb-4">
+                                        Giá Sản Phẩm: <span class="text-muted mr-2"><del>@proDAO.formatNumber(Model.proPrice) VND</del></span>
+                                        <b>
+                                            @proDAO.formatNumber(newPrice.ToString())VND
+                                        </b>
+                                    </h5>
+                                    <p class="text-muted"><i class="bx bx-cog font-size-16 align-middle text-primary mr-1"></i> Mô Tả Sản Phẩm: @Html.DisplayFor(model => model.proDescription)</p>
+                                    <p class="text-muted"><i class="far fa-calendar-alt
+ font-size-16 align-middle text-primary mr-1"></i> Ngày Niêm Yết: @Html.DisplayFor(model => model.proUpdateDate)</p>
+                                    @*<div class="row mb-3">
+            <div class="col-md-6">
+                <div>
+                    <p class="text-muted"><i class="bx bx-unlink font-size-16 align-middle text-primary mr-1"></i> Wireless</p>
+                    <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary mr-1"></i> Wireless Range : 10m</p>
+                    <p class="text-muted"><i class="bx bx-battery font-size-16 align-middle text-primary mr-1"></i> Battery life : 6hrs</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <p class="text-muted"><i class="bx bx-user-voice font-size-16 align-middle text-primary mr-1"></i> Bass</p>
+
+                </div>
+            </div>
+        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+        </div>
+        <!-- end row -->
+    </div> <!-- container-fluid -->
+</div>

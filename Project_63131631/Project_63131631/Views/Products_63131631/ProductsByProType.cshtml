@@ -1,0 +1,175 @@
+﻿@model PagedList.IPagedList<Project_63131631.Models.Product_63131631>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="~/Content/css/atc.css" rel="stylesheet" />
+    <link href="~/Content/css/popup.css" rel="stylesheet" />
+
+
+}
+@{
+    Project_63131631.Repository.ProductDAO proDAO = new Project_63131631.Repository.ProductDAO();
+    Project_63131631.Models.UserContext_63131631 db = new Project_63131631.Models.UserContext_63131631();
+}
+<!--content-->
+<div class="content-top ">
+    <div class="container ">
+        <div class="spec ">
+            <h3>@ViewBag.typeName</h3>
+            <div class="ser-t">
+                <b></b>
+                <span><i></i></span>
+                <b class="line"></b>
+            </div>
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("ProductsByProType", "Products_63131631", new { page }))
+        <div class="tab-head ">
+            <div class=" tab-content tab-content-t ">
+                <div class="tab-pane active text-style" id="tab1">
+                    <div class=" con-w3l">
+                        @foreach (var item in Model)
+                        {
+                            int newPrice = Int32.Parse(item.proPrice) - ((Int32.Parse(item.proPrice) * item.proDiscount.Value) / 100);
+                            <div class="col-md-3 m-wthree" style="margin-bottom:30px;">
+                                <div class="col-m">
+                                    <a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })" class="offer-img">
+                                        <img src="@item.proPhoto" width="150" height="150" alt="@item.proPhoto">
+                                        @if (Int32.Parse(item.proPrice) > newPrice)
+                                        {
+                                            <div class="offer"><p><span>Giảm @item.proDiscount %</span></p></div>
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </a>
+                                    <div class="mid-1">
+                                        <div class="women">
+                                            @if (item.proName.Length > 20)
+                                            {
+                                                <h6><a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })" data-toggle="tooltip" title="@item.proName">@item.proName.Substring(0, 19) . . .</a></h6>
+                                            }
+                                            else
+                                            {
+                                                <h6><a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })">@item.proName</a></h6>
+                                            }
+                                        </div>
+                                        (Bảo Hành: @item.proGuarantee)
+                                        <div class="mid-2">
+                                            <p><label>@proDAO.formatNumber(item.proPrice) VNĐ</label><em class="item_price">@proDAO.formatNumber(newPrice.ToString()) VNĐ</em></p>
+                                            <div class="clearfix"></div>
+                                            <div class="block">
+                                                @if (db.Rates.Find(item.proID) != null)
+                                                {
+                                                    for (int i = 0; i < db.Rates.Find(item.proID).rateStar; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:rgb(255, 172, 0);" />
+                                                    }
+                                                    for (int i = 0; i < 5 - db.Rates.Find(item.proID).rateStar; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    for (int i = 0; i < 5; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                    }
+                                                }
+                                            </div>
+                                            <div>
+                                                <a href="#"><img src="@item.Producer.pdcPhoto" width="20" height="20" /> @item.Producer.pdcName</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="add">
+                                            @*<a class="btn btn-success" href="javascript:void(0);" onclick="addToCart('@Url.Action("ThemVaoGio", "GioHang", new { SanPhamID = item.proID })')"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>*@
+                                            <button class="cart-button" data-url="@Url.Action("ThemVaoGio", "GioHang_63131631", new { SanPhamID = item.proID })">
+                                                <span class="add-to-cart">Thêm Vào Giỏ</span>
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert success-alert">
+        <h3>Thêm Thành Công</h3>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartButtons = document.querySelectorAll('.cart-button');
+
+        cartButtons.forEach(button => {
+            button.addEventListener('click', cartClick);
+        });
+    });
+
+    function cartClick() {
+        let button = this;
+
+        // Nếu đang có animation chưa hoàn thành, không thực hiện thêm animation
+        if (!button.classList.contains('clicked')) {
+            button.classList.add('clicked');
+
+            // Lấy URL từ thuộc tính data-url của nút
+            let url = button.getAttribute('data-url');
+
+            // Thực hiện Ajax để gọi Action ThemVaoGio với URL tương ứng
+            addToCart(url);
+        }
+    }
+
+    function addToCart(url) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (result) {
+                console.log(result);
+
+                // Update the number of items in the cart badge
+                $('.my-cart-badge').text(result.CartCount);
+
+                // Show the success alert
+                showSuccessAlert();
+
+                // Remove the "clicked" class after a delay
+                setTimeout(() => {
+                    $('.cart-button.clicked').removeClass('clicked');
+                }, 1500); // Adjust the delay time if needed
+            },
+        });
+    }
+    function showSuccessAlert() {
+        // Show the success alert
+        $(".success-alert").fadeIn().css("right", "20px"); // Slide in from the right
+
+        // Close the alert when the close button is clicked
+        $(".success-alert .close").click(function () {
+            $(".success-alert").fadeOut().css("right", "-300px"); // Slide out to the right
+        });
+
+        // Close the alert after a delay (adjust the time as needed)
+        setTimeout(() => {
+            $(".success-alert").fadeOut().css("right", "-300px"); // Slide out to the right
+        }, 1000); // 3000 milliseconds (3 seconds) delay
+    }
+
+
+
+</script>

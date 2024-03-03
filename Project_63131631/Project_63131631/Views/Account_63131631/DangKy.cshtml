@@ -1,0 +1,236 @@
+﻿@model Project_63131631.Models.Customer_63131631
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+}
+@using (Html.BeginForm("DangKy", "Account_63131631", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container" style=" font-size: 17px; margin-bottom: 158px; padding: 38px; margin-top: 17px; -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08); box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08); } ">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row gutters">
+            @if (!string.IsNullOrEmpty(ViewBag.Fail))
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Fail
+                </div>
+            }
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12" style=" margin-top: 110px;">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="user-avatar">
+                                    <img id="avatar" src="~/Images/user.png" alt="">
+                                </div>
+                                <label style="margin-top: 16px" class="button-6">
+                                    Tải Hình Ảnh Mới
+                                    <input type="file" name="Avatar" class="account-settings-fileinput" id="file-input" onchange="displayImage()">
+                                </label> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary" style=" font-size: 47px; text-transform: uppercase; font-weight: revert; margin-bottom: 57px; text-align:center;">Đăng Ký </h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="fullName">Họ Và Tên</label>
+                                    @Html.EditorFor(model => model.cusFullName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="eMail">Email</label>
+                                    @Html.EditorFor(model => model.cusEmail, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="phone">Số Điện Thoại</label>
+                                    @Html.EditorFor(model => model.cusPhone, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="website">Địa Chỉ</label>
+                                    @Html.EditorFor(model => model.cusAddress, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="website">Mật Khẩu</label>
+                                    @Html.PasswordFor(model => model.cusPass, new { @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.cusPass, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="website">Giới Tính</label>
+                                    <div class="checkbox" style="text-align:center">
+                                        Nam @Html.RadioButtonFor(model => model.GioiTinh, "True", new { @checked = "checked" }) &nbsp;
+                                        Nữ @Html.RadioButtonFor(model => model.GioiTinh, "False")
+                                        @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters" style=" margin-right: 40%;">
+                            <div class="text-right">
+                                <button style="color: white; background-color: black; width: 168px;border-radius:35px" type="submit" class="btn btn-info add-new">Đăng Ký</button>
+                            </div>
+                        </div>
+                        <p style="text-align: center; margin-top: 20px;">Đã có tài khoản? <a href="~/Account_63131631/DangNhap" style="text-decoration: none">Đăng nhập ngay!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add other fields you want to edit -->
+
+
+}
+
+
+<style>
+
+    .button-6 {
+        align-items: center;
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+        .button-6:hover,
+        .button-6:focus {
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .button-6:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-6:active {
+            background-color: #F0F0F1;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+            color: rgba(0, 0, 0, 0.65);
+            transform: translateY(0);
+        }
+
+    .account-settings .user-profile {
+        margin: 0 0 1rem 0;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .account-settings-fileinput {
+        position: absolute;
+        visibility: hidden;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .account-settings .user-profile .user-avatar {
+        margin: 0 0 1rem 0;
+    }
+
+        .account-settings .user-profile .user-avatar img {
+            width: 90px;
+            height: 90px;
+            -webkit-border-radius: 100px;
+            -moz-border-radius: 100px;
+            border-radius: 100px;
+        }
+
+    .account-settings .user-profile h5.user-name {
+        margin: 0 0 0.5rem 0;
+    }
+
+    .account-settings .user-profile h6.user-email {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #9fa8b9;
+    }
+
+    .account-settings .about {
+        margin: 2rem 0 0 0;
+        text-align: center;
+    }
+
+        .account-settings .about h5 {
+            margin: 0 0 15px 0;
+            color: #007ae1;
+        }
+
+        .account-settings .about p {
+            font-size: 0.825rem;
+        }
+
+    .form-control {
+        border: 1px solid #cfd1d8;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        font-size: .825rem;
+        background: #ffffff;
+        color: #2e323c;
+    }
+
+    .card {
+        background: #ffffff;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        border: 0;
+        margin-bottom: 1rem;
+    }
+</style>
+<script>
+    function displayImage() {
+        var input = document.getElementById('file-input');
+        var img = document.getElementById('avatar');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

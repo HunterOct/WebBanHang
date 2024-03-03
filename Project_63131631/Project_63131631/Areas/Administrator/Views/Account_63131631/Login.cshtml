@@ -1,0 +1,40 @@
+﻿@model Project_63131631.Areas.Administrator.Models.Administrator_63131631
+
+<title>Đăng nhập - My Shopper for Admin</title>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link href="~/Areas/Administrator/Content/login.css" rel="stylesheet" />
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <title>Trang Đăng Nhập ADMIN</title>
+    </head>
+    <body>
+        <section>
+            <div class="form-box">
+                <div class="form-value">
+                    <form action="">
+                        <h2>ADMIN LOGIN</h2>
+                        <div class="form-group text-danger" style=" color: wheat; ">@ViewBag.LoginError</div>
+                        <div class="inputbox">
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <input type="text" name="adAcc" required>
+                            <label for="">Username</label>
+                        </div>
+                        <div class="inputbox">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="password" name="adPass" required>
+                            <label for="">Mật khẩu</label>
+                        </div>
+                        <button type="submit">Đăng Nhập</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
+}

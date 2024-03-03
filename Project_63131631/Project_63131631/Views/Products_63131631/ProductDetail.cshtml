@@ -1,0 +1,363 @@
+﻿@model Project_63131631.Models.Product_63131631
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_LayoutShop.cshtml";
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="~/Content/css/atc.css" rel="stylesheet" />
+    <link href="~/Content/css/popup.css" rel="stylesheet" />
+
+
+}
+@{
+    Project_63131631.Repository.ProductDAO proDAO = new Project_63131631.Repository.ProductDAO();
+    Project_63131631.Models.UserContext_63131631 db = new Project_63131631.Models.UserContext_63131631();
+}
+<div class="single">
+    <div class="container left">
+        <div class="single-top">
+            <div class="col-md-5 single-top">
+                <div class="single-w3agile">
+                    <div id="picture-frame">
+                        <img src="@Model.proPhoto" data-src="@Model.proPhoto" alt="" class="img-responsive" />
+                    </div>
+                    <script src="~/Content/js/jquery.zoomtoo.js"></script>
+                    <script>
+                        $(function () {
+                            $("#picture-frame").zoomToo({
+                                magnify: 1
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        @{
+            int newPrice = Int32.Parse(Model.proPrice) - ((Int32.Parse(Model.proPrice) * Model.proDiscount.Value) / 100);
+        }
+        <div class="col-md-7 single-top-left ">
+            <div class="single-right">
+                <h3>@Model.proName</h3>
+                <p style="font-size:20px;">Bảo hành: @Model.proGuarantee</p>
+                <div class="pr-single">
+                    <p class="reduced " style="font-size:24px;"><del>@proDAO.formatNumber(Model.proPrice) VNĐ</del>@proDAO.formatNumber(newPrice.ToString()) VNĐ</p>
+                </div>
+                <div class="block block-w3">
+                    <div class="starbox small ghosting">
+                        @if (db.Rates.Find(Model.proID) != null)
+                        {
+                            for (int i = 0; i < db.Rates.Find(Model.proID).rateStar; i++)
+                            {
+                                <img src="~/Images/star.png" style="background-color:rgb(255, 172, 0);" />
+                            }
+                            for (int i = 0; i < 5 - db.Rates.Find(Model.proID).rateStar; i++)
+                            {
+                                <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                            }
+                        }
+                    </div>
+                </div>
+                <p class="in-pa">Mô tả: @Model.proDescription </p>
+                <ul class="social-top">
+                    <li><a href="http://facebook.com/tung.tim.96" target="_blank" class="icon facebook"><i class="fa fa-facebook" aria-hidden="true"></i><span></span></a></li>
+                </ul>
+                <div class="add add-3">
+                    @*<a class="btn btn-success" href="@Url.Action("ThemVaoGio", "GioHang", new { SanPhamID = Model.proID })"> <span class="glyphicon glyphicon-shopping-cart"></span>  Thêm vào giỏ </a>*@
+                    <button class="cart-button" data-url="@Url.Action("ThemVaoGio", "GioHang_63131631", new { SanPhamID = Model.proID })">
+                        <span class="add-to-cart">Thêm Vào Giỏ</span>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <i class="fa fa-archive" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+        <!--TIêu đề-->
+        <div class="spec " style="margin-top:30px;">
+            <h3><a href="@Url.Action("ProductsByPdc", "Products_63131631", new { id= Model.pdcID, page=1 })" style="text-decoration:none;">Sản Phẩm Cùng Hãng @Model.Producer.pdcName</a></h3>
+            <div class="ser-t">
+                <b></b>
+                <span><i></i></span>
+                <b class="line"></b>
+            </div>
+        </div>
+        <!--Sản phẩm-->
+        <div class="tab-head ">
+            <div class=" tab-content tab-content-t ">
+                <div class="tab-pane active text-style" id="tab1">
+                    <div class=" con-w3l">
+                        @{int qtt = 0;}
+                        @foreach (var item in db.Products.SqlQuery("SELECT * FROM Products WHERE pdcID="+Model.pdcID+" ORDER BY proUpdateDate DESC"))
+                        {
+                            qtt++;
+                            if (qtt > 4)
+                            {
+                                break;
+                            }
+                            int newPrice1 = Int32.Parse(item.proPrice) - ((Int32.Parse(item.proPrice) * item.proDiscount.Value) / 100);
+                            <div class="col-md-3 m-wthree" style="margin-bottom:30px;">
+                                <div class="col-m">
+                                    <a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })" class="offer-img">
+                                        <img src="@item.proPhoto" width="150" height="150" alt="@item.proPhoto">
+                                        @if (Int32.Parse(item.proPrice) > newPrice1)
+                                        {
+                                            <div class="offer"><p><span>Giảm @item.proDiscount %</span></p></div>
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </a>
+                                    <div class="mid-1">
+                                        <div class="women">
+                                            @if (item.proName.Length > 20)
+                                            {
+                                                <h6><a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })" data-toggle="tooltip" title="@item.proName">@item.proName.Substring(0, 19) . . .</a></h6>
+                                            }
+                                            else
+                                            {
+                                                <h6><a href="@Url.Action("ProductDetail", "Products_63131631", new { id=item.proID })">@item.proName</a></h6>
+                                            }
+                                        </div>
+                                        (Bảo Hành: @item.proGuarantee)
+                                        <div class="mid-2">
+                                            <p><label>@proDAO.formatNumber(item.proPrice) VNĐ</label><em class="item_price">@proDAO.formatNumber(newPrice1.ToString()) VNĐ</em></p>
+                                            <div class="clearfix"></div>
+                                            <div class="block">
+                                                @if (db.Rates.Find(item.proID) != null)
+                                                {
+                                                    for (int i = 0; i < db.Rates.Find(item.proID).rateStar; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:rgb(255, 172, 0);" />
+                                                    }
+                                                    for (int i = 0; i < 5 - db.Rates.Find(item.proID).rateStar; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    for (int i = 0; i < 5; i++)
+                                                    {
+                                                        <img src="~/Images/star.png" style="background-color:#b0b0b0" />
+                                                    }
+                                                }
+                                            </div>
+                                            <div>
+                                                <a href="#"><img src="@item.Producer.pdcPhoto" width="20" height="20" /> @item.Producer.pdcName</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="add">
+                                            @*<a class="btn btn-success" href="javascript:void(0);" onclick="addToCart('@Url.Action("ThemVaoGio", "GioHang", new { SanPhamID = item.proID })')"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>*@
+                                            <button class="cart-button" data-url="@Url.Action("ThemVaoGio", "GioHang_63131631", new { SanPhamID = item.proID })">
+                                                <span class="add-to-cart">Thêm Vào Giỏ</span>
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert success-alert">
+            <h3>Thêm Thành Công</h3>
+        </div>
+        <div class="clearfix"> </div>
+        <!--Giới thiệu-->
+        <div class="row">
+            <div>
+                <div class="col-sm-4">
+                    <h4>Phương thức thanh toán &amp; giao hàng</h4>
+                    <div class="content">
+                        <div class="toasang">
+                            <img src="~/Images/icon_shipping.png" />
+                        </div>
+                        <p><strong class="bold">Miễn phí vận chuyển cho đơn hàng trên 1.000.000VNĐ</strong></p>
+                        <ul style="font-size:large;">
+                            <li class="fa fa-check-circle">
+                                <a href="#" title="">
+                                    Giao hàng và thu tiền tận nơi
+                                </a>
+                            </li>
+                            <li class="fa fa-check-circle">
+                                <a href="#" title="">Chuyển khoản và giao hàng</a>
+                            </li>
+                            <li class="fa fa-check-circle">
+                                <a href="#" title="">Mua hàng tại shop</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Hỗ trợ 24/7</h4>
+                    <div class="content">
+                        <div class="toasang">
+                            <img src="~/Images/icon_support.png" />
+                        </div>
+                        <p><strong>Gọi ngay cho chúng tôi khi bạn có thắc mắc</strong></p>
+                        <ul style="font-size:xx-large;">
+                            <li class="fa fa-check-circle">
+                                <strong class="big npl">01212692802 </strong>
+                            </li>
+                            <li class="fa fa-check-circle">
+                                <strong class="big npl">01212692802 </strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Thẻ thành viên</h4>
+                    <div class="content">
+                        <div class="toasang">
+                            <img src="~/Images/icon_card.png" />
+                        </div>
+                        <p><strong class="bold">Chế độ ưu đãi thành viên VIP:</strong></p>
+                        <ul style="font-size:large;">
+                            <li class="fa fa-check-circle">5% cho thành viên Bạc</li>
+                            <li class="fa fa-check-circle">10% cho thành viên Vàng</li>
+                            <li class="fa fa-check-circle">15% cho thành viên Kim cương</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .toasang {
+        margin: 20px;
+        position: relative;
+        display: block;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        border-radius: 100%;
+        font: 700 30px/80px 'arial';
+        text-decoration: none;
+        color: #313131;
+        z-index: 1;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -ms-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+
+        .toasang:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: 100%;
+            background: #dfdfdf;
+            z-index: -1;
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -ms-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
+
+        .toasang:hover {
+            color: #fff;
+            background: #399;
+        }
+
+            .toasang:hover:after {
+                background: transparent;
+                -webkit-transform: scale(1.6);
+                -moz-transform: scale(1.6);
+                -ms-transform: scale(1.6);
+                -o-transform: scale(1.6);
+                transform: scale(1.6);
+            }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartButtons = document.querySelectorAll('.cart-button');
+
+        cartButtons.forEach(button => {
+            button.addEventListener('click', cartClick);
+        });
+    });
+
+    function cartClick() {
+        let button = this;
+
+        // Nếu đang có animation chưa hoàn thành, không thực hiện thêm animation
+        if (!button.classList.contains('clicked')) {
+            button.classList.add('clicked');
+
+            // Lấy URL từ thuộc tính data-url của nút
+            let url = button.getAttribute('data-url');
+
+            // Thực hiện Ajax để gọi Action ThemVaoGio với URL tương ứng
+            addToCart(url);
+        }
+    }
+
+    function addToCart(url) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (result) {
+                console.log(result);
+
+                // Update the number of items in the cart badge
+                $('.my-cart-badge').text(result.CartCount);
+
+                // Show the success alert
+                showSuccessAlert();
+
+                // Remove the "clicked" class after a delay
+                setTimeout(() => {
+                    $('.cart-button.clicked').removeClass('clicked');
+                }, 1500); // Adjust the delay time if needed
+            },
+        });
+    }
+    function showSuccessAlert() {
+        // Show the success alert
+        $(".success-alert").fadeIn().css("right", "20px"); // Slide in from the right
+
+        // Close the alert when the close button is clicked
+        $(".success-alert .close").click(function () {
+            $(".success-alert").fadeOut().css("right", "-300px"); // Slide out to the right
+        });
+
+        // Close the alert after a delay (adjust the time as needed)
+        setTimeout(() => {
+            $(".success-alert").fadeOut().css("right", "-300px"); // Slide out to the right
+        }, 1000); // 3000 milliseconds (3 seconds) delay
+    }
+
+
+
+</script>

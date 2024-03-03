@@ -1,0 +1,91 @@
+﻿@model PagedList.IPagedList<Project_63131631.Areas.Administrator.Models.ProductType_63131631>
+@{
+    ViewBag.Title = "Loại sản phẩm";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}y
+<div class="col-lg-6" style="margin:0 auto">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-top:100px">
+            <a style="color: white; background-color: black; margin-left: 23px; width: 185px; border-radius: 35px; margin-bottom: 20px; " class="btn btn-info add-new" href="@Url.Action("Create", "ProductType_63131631")" role="button"><i class="fa fa-plus"></i> Tạo loại sản phẩm mới</a>
+        </div>
+
+        <!-- /.table-responsive -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Danh Mục</th>
+                                    <th scope="col">Tên Loại Sản Phẩm</th>
+                                    <th scope="col">Chức Năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-body font-weight-bold">@Html.DisplayFor(modelItem => item.typeID)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Category.cateName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.typeName)</td>
+                                        <td>
+                                            <a href="@Url.Action("Edit", "ProductType_63131631", new { id = item.typeID })"><i class="bx bx-edit-alt"></i></a>|
+                                            <a onclick="return confirm('Bạn có chắc chắn muốn xoá loại sản phẩm này?')" href="@Url.Action("Delete", "ProductType_63131631", new { id = item.typeID })"><i class="fa fa-times fa-fw"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="pagination pagination-rounded justify-content-center mt-4">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li class="page-item">
+                                        <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link"><i class="mdi mdi-chevron-left"></i></span>
+                                    </li>
+                                }
+
+                                @for (int i = 1; i <= Model.PageCount; i++)
+                                {
+                                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                        <a href="@Url.Action("Index", new { page = i })" class="page-link">@i</a>
+                                    </li>
+                                }
+
+                                @if (Model.HasNextPage)
+                                {
+                                    <li class="page-item">
+                                        <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link"><i class="mdi mdi-chevron-right"></i></span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.panel-body -->
+</div>
+    <!-- /.panel -->
+</div>

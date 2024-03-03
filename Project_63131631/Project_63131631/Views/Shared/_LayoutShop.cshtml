@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="~/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="~/Content/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
+    <!-- js -->
+    <script src="~/Content/js/jquery-1.11.1.min.js"></script>
+    <!-- //js -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="~/Content/js/move-top.js"></script>
+    <script type="text/javascript" src="~/Content/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!--- start-rate---->
+    <script src="~/Content/js/jstarbox.js"></script>
+    <link rel="stylesheet" href="~/Content/css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
+    <!---//End-rate---->
+    <style>
+        li {
+            list-style-type: none;
+        }
+
+        #style-6::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+        #style-6::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-6::-webkit-scrollbar-thumb {
+            background-color: #F90;
+            background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent)
+        }
+    </style>
+</head>
+<body id="style-6">
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="@Url.Action("Index", "Home_63131631")"><b>T<br>H<br>E</b>NVIDIA GEFORCE<span>Authorized Store</span></a></h1>
+            </div>
+            @*<div class="head-t">
+                    <ul class="card">
+                        <li><a href="/Account/dangnhap"><i class="fa fa-user" aria-hidden="true"></i>Đăng nhập</a></li>
+                        <li><a href="/Account/dangky"><i class="fa fa-arrow-right" aria-hidden="true"></i>Đăng ký</a></li>
+                    </ul>
+                </div>*@
+
+            <li class="head-t">
+                @{ var u = Session["use"] as Project_63131631.Models.Customer_63131631; }
+                @{ if (u != null)
+                    {
+                        <div class="">
+                            <a style="color:#000f" href="@Url.Action("Details", "Account_63131631")"> Xin chào : @u.cusFullName</a>
+                            &nbsp;
+                            @*@Html.ActionLink("ĐĂNG XUẤT", "logout", "Account", new { style = "color:red" })
+                                <a style="color:red" href="/Account/logout"> ĐĂNG XUẤT</a>*@
+                            <a style="color:red" href="/Account_63131631/logout"><i class="fa fa-user-plus" aria-hidden="true"></i> Đăng  Xuất</a>
+                        </div> }
+                    else
+                    {
+                        <div class="head-t">
+                            <ul class="card">
+                                <li><a href="/Account_63131631/dangnhap"><i class="fa fa-user" aria-hidden="true"></i>Đăng nhập</a></li>
+                                <li><a href="/Account_63131631/Dangky"><i class="fa fa-arrow-right" aria-hidden="true"></i>Đăng ký</a></li>
+                            </ul>
+                        </div>
+                    }
+                }
+            </li>
+
+            <div class="header-ri">
+                <ul class="social-top">
+                    <li><a href="https://www.facebook.com/HunterDz.1910/" target="_blank" class="icon facebook"><i class="fa fa-facebook" aria-hidden="true"></i><span></span></a></li>
+                    <li><a href="#" class="icon pinterest"><i class="fa fa-youtube-play" aria-hidden="true"></i><span></span></a></li>
+                </ul>
+            </div>
+            <div class="nav-top">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header nav_2">
+                        <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                            <span class="sr-only">Toggle navigaion</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                        <ul class="nav navbar-nav ">
+                            <li class=" "><a href="@Url.Action("Index", "Home_63131631")" class="hyper "><span>Trang chủ</span></a></li>
+                            @{
+                                Project_63131631.Models.UserContext_63131631 db = new Project_63131631.Models.UserContext_63131631();
+                                foreach (var itemCate in db.Categories)
+                                {
+                                    <li class="dropdown ">
+                                        <a href="#" class="dropdown-toggle  hyper" data-toggle="dropdown"><span>@itemCate.cateName<b class="caret"></b></span></a>
+                                        <ul class="dropdown-menu">
+                                            <div class="col-sm-12">
+                                                <ul class="multi-column-dropdown" style="text-align:center">
+                                                    @foreach (var itemPt in db.ProductTypes.Where(c => c.cateID == itemCate.cateID))
+                                                    {
+                                                        <li><a href="@Url.Action("ProductsByProType", "Products_63131631", new { id = itemPt.typeID, page = 1 })"><i class="fa fa-angle-right" aria-hidden="true"></i>@itemPt.typeName</a></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <ul class="multi-column-dropdown" style="text-align:center">
+                                                    <li>
+                                                        <img src="@itemCate.catePhoto" width="100" height="50" />
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                            <li class="dropdown ">
+                                <a href="#" class="dropdown-toggle  hyper" data-toggle="dropdown"><span>Hãng sản xuất<b class="caret"></b></span></a>
+                                <ul class="dropdown-menu">
+                                    <div class="col-sm-12">
+                                        <ul class="multi-column-dropdown">
+                                            @foreach (var itemPdc in db.Producers)
+                                            {
+                                                <li><a href="@Url.Action("ProductsByPdc", "Products_63131631", new { id = itemPdc.pdcID, page = 1 })"><img src="@itemPdc.pdcPhoto" width="20" height="20" /> @itemPdc.pdcName</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li><a href="#" class="hyper "><span>Phản hồi</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="cart">
+                        @{
+                            List<Project_63131631.Models.CartItem_63131631> gio = Session["giohang"] as List<Project_63131631.Models.CartItem_63131631>;
+                            if (gio == null || gio.Count == 0)
+                            {
+                                <a href="@Url.Action("Index","GioHang_63131631")"><span class="fa fa-shopping-cart my-cart-icon"><span class="badge badge-notify my-cart-badge">0</span></span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index","GioHang_63131631")"><span class="fa fa-shopping-cart my-cart-icon"><span class="badge badge-notify my-cart-badge">@gio.Count</span></span></a>
+                            }
+                        }
+                    </div>
+                </nav>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+
+
+    <div class="footer">
+        <div class="container">
+            @*<div class="col-md-3 footer-grid">
+                    <h3>Giới thiệu</h3>
+                    <p>
+                        Cửa hàng thời trang.
+                    </p>
+                </div>
+                <div class="col-md-3 footer-grid ">
+                    <h3>Menu</h3>
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        @foreach (var itemCate in db.Categories)
+                        {
+                            <li><a href="#">@itemCate.cateName</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>Tài khoản</h3>
+                    <ul>
+                        <li><a href="/Account/dangnhap">Đăng nhập</a></li>
+                        <li><a href="/Account/dangky">Đăng ký</a></li>
+                    </ul>
+                </div>*@
+            <div class="clearfix"></div>
+            <div class="footer-bottom">
+                <h2><a href="/home/index"><b>T<br>H<br>E</b>Liên Hệ Tôi@*<span>The Best Fashion</span>*@</a></h2>
+                <ul class="social-fo">
+                    <li><a href="https://www.facebook.com/HunterDz.1910/" target="_blank" class=" face"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class=" twi"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class=" pin"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                    <li><a href="#" class=" dri"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                </ul>
+                <div class=" address">
+                    <div class="col-md-4 fo-grid1">
+                        <p><i class="fa fa-home" aria-hidden="true"></i>Nha Trang ,Khánh Hòa.</p>
+                    </div>
+                    <div class="col-md-4 fo-grid1">
+                        <p><i class="fa fa-phone" aria-hidden="true"></i>0569999999</p>
+                    </div>
+                    <div class="col-md-4 fo-grid1">
+                        <p><a href="mailto:hunter.19oct@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>hunter.19oct@gmail.com</a></p>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+            <div class="copy-right">
+                <p> &copy; 2023. All Rights Reserved | Design by  <a target="_blank" href="https://www.facebook.com/HunterDz.1910/">Hữu Tường</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- //footer-->
+    <!-- smooth scrolling -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+    <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+    <!-- //smooth scrolling -->
+    <script src="~/Content/js/bootstrap.js"></script>
+    <!-- for bootstrap working -->
+</body>
+</html>

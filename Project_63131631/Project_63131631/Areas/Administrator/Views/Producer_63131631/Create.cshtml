@@ -1,0 +1,77 @@
+﻿@model Project_63131631.Areas.Administrator.Models.Producer_63131631
+
+@{
+    ViewBag.Title = "Tạo hãng mới";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tạo hãng mới</h2>
+
+
+
+@using (Html.BeginForm("Create", "Producer_63131631", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+<div class="page-content">
+    @Html.ValidationSummary(true)
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8" style="margin:0 auto">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="productname">Tên Hãng</label>
+                                        @Html.EditorFor(model => model.pdcName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên hãng..." } })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manufacturername">Số Điện Thoại</label>
+                                        @Html.EditorFor(model => model.pdcPhone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số điện thoại..." } })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productdesc">Email</label>
+                                        @Html.EditorFor(model => model.pdcEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email..." } })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productdesc">Địa Chỉ</label>
+                                        @Html.TextAreaFor(model => model.pdcAddress, new { @class = "form-control", @placeholder = "Nhập địa chỉ..." })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="productdesc">Thông Tin</label>
+                                        @Html.TextAreaFor(model => model.pdcInfo, new { @class = "form-control", @placeholder = "Nhập thông tin hãng..." })
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-3">Hình Ảnh Hãng</h4>
+                                            <form action="" method="post" class="dropzone">
+                                                <div class="fallback">
+                                                    <input name="file" type="file" required />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nut" style="margin-top: 30px; text-align: center;">
+                                <button style="color: white; background-color: black; width: 168px;border-radius:35px" type="submit" class="btn btn-info add-new">Lưu Lại</button>
+                                <a style="color: white; background-color: black; width: 190px; margin-left: 23px; border-radius: 35px " class="btn btn-info add-new" href="@Url.Action("Index")" role="button"><i class=""></i>Quay Lại</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div> <!-- container-fluid -->
+</div>
+}

@@ -1,0 +1,30 @@
+﻿
+
+.success-alert {
+    background: #57cb3e;
+    color: white;
+    display: none;
+    position: fixed; /* Change to fixed for absolute positioning */
+    bottom: 20px;
+    right: 20px;
+    width: 300px; /* Adjust the width as needed */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 5px #ccc;
+    transition: right 0.3s ease-in-out; /* Transition for sliding effect */
+}
+
+@mixin alert($name,$bgColor){
+  $accentColor:darken($bgColor,50);
+  .#{$name}{
+    background-color:#{$bgColor};
+    border-left:5px solid $accentColor;
+    .close{
+      border-color:$accentColor;
+      color:$accentColor;
+    }
+  }
+}
+
+@include alert(success-alert,#a8f0c6);
+
